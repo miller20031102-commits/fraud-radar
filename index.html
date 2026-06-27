@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防詐騙雷達 AI｜免費詐騙訊息、網址、LINE ID 風險分析工具</title>
+<meta name="description" content="防詐騙雷達 AI 是免費詐騙訊息分析工具，可協助判斷假客服、投資詐騙、包裹簡訊、求職詐騙、釣魚連結與可疑 LINE ID。">
+
+<meta name="keywords" content="詐騙辨識,防詐騙,詐騙訊息分析,165反詐騙,LINE詐騙,投資詐騙,假客服詐騙,釣魚連結">
+
+<meta property="og:title" content="防詐騙雷達 AI">
+<meta property="og:description" content="貼上可疑訊息、網址或 LINE ID，立即分析詐騙風險。">
+<meta property="og:type" content="website">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>🛡️ 防詐騙雷達 AI</h1>
+
+        <p class="subtitle">
+            貼上訊息、網址、電話或 LINE ID，
+            AI 幫你分析是否有詐騙風險。
+        </p>
+
+        <textarea
+            id="inputText"
+            placeholder="例如：
+您好，我是蝦皮客服，您的訂單誤設分期付款，請加入 LINE 客服協助解除..."
+        ></textarea>
+        <div class="upload-box">
+    <label for="imageUpload">
+        📷 上傳詐騙截圖（Beta）
+    </label>
+
+    <input
+        type="file"
+        id="imageUpload"
+        accept="image/*"
+        onchange="previewImage(event)"
+    >
+
+    <p>
+        可上傳 LINE、簡訊、IG 私訊截圖。<br>
+        目前先支援圖片預覽，之後將加入 OCR 文字辨識。
+    </p>
+
+    <img id="preview" alt="截圖預覽">
+    <button id="removeImageBtn" onclick="removeImage()" style="display:none;">
+    🗑️ 移除圖片
+</button>
+</div>
+        <div class="examples">
+    <button onclick="fillExample('investment')">投資詐騙範例</button>
+    <button onclick="fillExample('service')">假客服範例</button>
+    <button onclick="fillExample('job')">求職詐騙範例</button>
+</div>
+
+        <button onclick="analyzeScam()">
+            🔍 分析詐騙風險
+        </button>
+<button class="clear-btn" onclick="clearAll()">
+    🧹 清除重新分析
+</button>
+<button class="share-site-btn" onclick="shareSite()">
+    📤 分享防詐騙雷達給家人朋友
+</button>
+        <div id="result"></div>
+<div class="hot-scams">
+    <h2>🔥 近期熱門詐騙手法</h2>
+
+    <div class="hot-card">
+    <h3>
+        <a href="shopee-scam.html">
+            假客服解除分期
+        </a>
+    </h3>
+
+    <p>
+        常見話術：訂單誤設分期、重複扣款、要求加入 LINE 客服。
+    </p>
+</div>
+    <div class="hot-card">
+        <h3>投資老師帶單</h3>
+        <p>常見話術：保證獲利、穩賺不賠、加入 VIP 群組、先入金。</p>
+    </div>
+
+    <div class="hot-card">
+        <h3>包裹補繳運費</h3>
+        <p>常見話術：地址錯誤、配送失敗、補繳運費、點擊連結。</p>
+    </div>
+
+    <div class="hot-card">
+        <h3>高薪兼職詐騙</h3>
+        <p>常見話術：在家工作、日領高薪、提供帳戶、先繳保證金。</p>
+    </div>
+</div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
