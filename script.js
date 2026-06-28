@@ -1,9 +1,18 @@
 const scamTypes = [
     {
-        type: "假客服詐騙",
-        keywords: ["客服", "解除分期", "訂單異常", "重複扣款", "誤設", "會員升級", "取消設定", "line客服", "驗證碼"],
-        advice: "請直接到官方 App 或官方網站查詢，不要加入陌生 LINE 客服。"
-    },
+    type: "假客服詐騙",
+    keywords: [
+        "客服", "解除分期", "訂單異常", "重複扣款", "誤設",
+        "會員升級", "取消設定", "line客服", "驗證碼",
+        "扣款失敗", "24小時", "完成更新", "帳單",
+        "帳單自動扣款", "自動扣款", "網路銀行", "網銀",
+        "帳戶停用", "更新帳戶", "帳戶詳細", "詳細信息",
+        "點擊連結", "短網址", "etag", "銀行通知", "重新啟用"
+    ],
+    advice: "請直接到官方 App 或官方網站查詢，不要加入陌生 LINE 客服。"
+},
+
+
     {
         type: "投資詐騙",
         keywords: ["保證獲利", "穩賺不賠", "老師帶單", "投資群", "高報酬", "內線消息", "虛擬貨幣", "入金", "vip群組"],
@@ -51,7 +60,62 @@ function analyzeScam() {
     let matchedTypes = [];
     let matchedKeywords = [];
 let aiReasoning = [];
-    if (detectedLinks.length > 0) totalScore += 10;
+   if (detectedLinks.length > 0) {
+    totalScore += 20;
+    aiReasoning.push("偵測到網址連結，詐騙訊息常引導點擊不明網站。");
+}
+if (text.includes("扣款失敗")) {
+    totalScore += 25;
+    matchedKeywords.push("扣款失敗");
+}
+
+if (text.includes("網銀")) {
+    totalScore += 20;
+    matchedKeywords.push("網銀");
+}
+
+if (text.includes("24小時")) {
+    totalScore += 15;
+    matchedKeywords.push("24小時");
+}
+
+if (text.includes("帳單")) {
+    totalScore += 10;
+    matchedKeywords.push("帳單");
+}
+
+if (text.includes("etag") || text.includes("elag") || text.includes("e-tag")) {
+    totalScore += 15;
+    matchedKeywords.push("eTag");
+}
+if (
+    text.includes("s.id") ||
+    text.includes("bit.ly") ||
+    text.includes("reurl.cc")
+) {
+    totalScore += 30;
+    matchedKeywords.push("短網址");
+    aiReasoning.push("偵測到短網址，詐騙簡訊常利用短網址隱藏真實網站。");
+}
+if (text.includes("自動") && text.includes("更新")) {
+    totalScore += 20;
+    matchedKeywords.push("自動扣款/更新");
+}
+
+if (text.includes("詳細") || text.includes("信息") || text.includes("訪問")) {
+    totalScore += 15;
+    matchedKeywords.push("詳細信息/訪問連結");
+}
+
+if (text.includes("銀行") || text.includes("網銀") || text.includes("帳戶")) {
+    totalScore += 20;
+    matchedKeywords.push("銀行/帳戶");
+}
+
+if (text.includes("165") && detectedLinks.length > 0) {
+    totalScore += 10;
+    matchedKeywords.push("165反詐騙圖片來源");
+}
     if (detectedPhones.length > 0) totalScore += 10;
     if (detectedLineIds.length > 0) totalScore += 15;
     if (detectedMoney.length > 0) totalScore += 10;
@@ -285,11 +349,12 @@ document.getElementById("removeImageBtn").style.display = "block";
         data: { text }
     } = await Tesseract.recognize(
         file,
-        "chi_tra+eng"
+        "eng+chi_tra"
     );
 
     document.getElementById("inputText").value = text;
-
+console.log(text);
+alert(text);
     analyzeScam();
 }
 function removeImage() {

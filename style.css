@@ -222,3 +222,14 @@ button:hover{
     margin-top:15px;
     border-radius:14px;
 }
+.hot-card a {
+    color: #d946ef;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.hot-card a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
